@@ -1,8 +1,9 @@
 package br.ufc.crateus.eda.util;
 
 import java.util.Arrays;
+import java.util.Iterator;
 
-public class ArrayVar<T> {
+public class ArrayVar<T> implements Iterable<T> {
 	private T[] array;
 	private int length = 0;
 	
@@ -43,6 +44,43 @@ public class ArrayVar<T> {
 	
 	public int length() {
 		return length;
+	}
+
+	public void remove(int j) {
+		for(int i = j; i < length - 1; i++) array[i] = array[i + 1];
+		length--;
+	}
+
+	@Override
+	public Iterator<T> iterator() {
+		return new Iterator<T>() {
+			int cursor = 0;
+			
+			@Override
+			public boolean hasNext() {
+				return cursor < length;
+			}
+
+			@Override
+			public T next() {
+				return array[cursor++];
+			}
+		};
+	}
+	
+	public static void main(String[] args) {
+		ArrayVar<Integer> arr = new ArrayVar<>(3);
+		arr.add(1);
+		arr.add(2);
+		arr.add(3);
+		arr.add(4);
+		arr.add(5);
+		arr.add(6);
+		arr.add(7);
+		
+		for (Integer i : arr) {
+			System.out.println(i);
+		}
 	}
 }
 
