@@ -5,9 +5,9 @@ import java.util.Queue;
 
 public class BinarySearchTreeST<K extends Comparable<K>, V> implements OrderedST<K, V> {
 	
-	private Node root;
+	protected Node root;
 	
-	private class Node {
+	protected class Node {
 		K key;
 		V value;
 		Node left;
@@ -52,10 +52,26 @@ public class BinarySearchTreeST<K extends Comparable<K>, V> implements OrderedST
 		return null;
 	}
 
-	@Override
+	@Override	
 	public void delete(K key) {
-		// TODO Auto-generated method stub
-		
+		root = delete(root, key);
+	}
+	
+	private Node delete(Node r, K key) {
+		if (r == null) return null;
+		int cmp = key.compareTo(r.key);
+		if (cmp < 0) r.left = delete(r.left, key);
+		else if (cmp > 0) r.right = delete(r.right, key);
+		else {
+			if (r.left == null) return r.right;
+			else if (r.right == null) return r.left;
+			Node tmp = r;
+			r = min(r.right);
+			r.left = tmp.left;
+			r.right = deleteMin(tmp.right);
+		}
+		r.count = size(r.left) + size(r.right) + 1;
+		return r;
 	}
 	
 	public void deleteMin() {
