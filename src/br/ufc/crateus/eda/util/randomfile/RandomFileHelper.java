@@ -2,6 +2,7 @@ package br.ufc.crateus.eda.util.randomfile;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.io.UnsupportedEncodingException;
+import java.util.Random;
 
 public class RandomFileHelper {
 	public static byte[] read(String file, long position, int size) { 
@@ -66,5 +67,8 @@ public class RandomFileHelper {
 		int i = 0;
 		Student e1 = Student.fromBytes(read("/Users/disciplinas/Desktop/estudante.data", 64 * i, 64));
 		System.out.println(e1);
+		
+		Random r = new Random(10L);
+		r.nextInt();
 	}
 }
